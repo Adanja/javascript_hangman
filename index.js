@@ -16,51 +16,123 @@ function askForLetter (guesses) {
     letter = askForLetter(guesses);
   }
 
-  else if (!isTheAlphabet(letter)) {
-    console.log("Letter mag geen speciale tekens bevatten");
+  else if (!isTheAlphabet(letter) || guesses.includes(letter.toLocaleUpperCase())) {
+    console.log("Letter mag geen speciale tekens of hoofdletters bevatten!");
     letter = askForLetter(guesses);
   }
   return letter;
 }
 
-function hangman () {
-  let numberOfTurns = 0;
-  let count = 0;
-  for (let i = numberOfTurns < 7; ++i;) {
-    switch ( typeof numberOfTurns[i]) {
-      case "numberOfTurns":
-        console.log(`
-      |   
-      |
-      |
-      |
-      |
-      =========== `);
-        ++count; break;
-
-
-
-  //     case typeof numberOfTurns[i] == "numberOfTurns":
-  //       count++;
-  //       console.log(`
-  // __________
-  // | /     |
-  // |/     _o_
-  // |       O
-  // |      / \\\\
-  // |
-  // ===========`)
-  //       // Hangman plaatje 2
-  //       break;
-
+function hangman (guesses, word) {
+  let wrongGuessesCounter = 0;
+  for (let i = 0; i < guesses.length; i++) {
+    //
+    let guessedLetter = guesses[i];
+    if (!word.includes(guessedLetter)) {
+      wrongGuessesCounter+= 1;
+    }
+    else {
+      return wrongGuessesCounter >= 7;
     }
   }
+
+    switch (wrongGuessesCounter) {
+      case 1 :
+        console.log("Eerste keer fout. Je hebt nog 6 pogingen.");
+        console.log(`
+|   
+|
+|
+|
+|
+=========== `);
+        break;
+
+      case 2 :
+        console.log("Dit is de tweede keer fout. Je hebt nog 5 pogingen.");
+        console.log(`              
+__________
+| /     |
+|/     
+|       
+|       
+|
+===========
+        `);
+        break;
+
+      case 3 :
+        console.log("Dit is de derde keer fout. Je hebt nog 4 pogingen.");
+        console.log(`
+__________
+| /     |
+|/      o
+|       
+|       
+|
+===========`)
+        break;
+
+      case 4 :
+        console.log("Dit is de vier keer fout. Je hebt nog 3 pogingen.");
+        console.log(`
+__________
+| /     |
+|/     _o_
+|       
+|       
+|
+===========`)
+        break;
+
+      case 5 :
+        console.log("Dit is de vijfde keer fout. Je hebt nog 2 pogingen.");
+        console.log(`
+__________
+| /     |
+|/     _o_
+|       O
+|       
+|
+===========`
+        );
+        break;
+
+      case 6 :
+        console.log("Dit is de zesde keer fout. Je hebt nog 1 poging.");
+        console.log(`
+__________
+| /     |
+|/     _o_
+|       O
+|      / 
+|
+===========
+        `);
+        break;
+
+      case 7 :
+        console.log("Dit is de zevende keer fout. GAME OVER!");
+        console.log(`
+__________
+| /     |
+|/     _o_
+|       O
+|      / \\
+|
+===========`);
+        break;
+
+      default:
+        console.log("Default");
+        break;
+    }
 }
 
 
 function game(word, guesses) {
-  let i = 0;
-  console.log("Dit heb je tot nu toe geraden: ", guesses + " " + i++);
+
+  console.log("Dit heb je tot nu toe geraden: ", guesses);
 
   let letter = askForLetter(guesses);
 
@@ -74,10 +146,11 @@ function game(word, guesses) {
     console.log("Je hebt gewonnen!");
   }
   else if(isGameLost(word, guesses)) {
+    hangman(guesses, word);
     console.log("Je hebt het 7 keer proberen te raden, dit is VEEL TE VAAK. VERLOREN.");
   }
   else {
-    hangman();
+    hangman(guesses, word);
     game(word, guesses);
   }
 
@@ -96,4 +169,4 @@ __________
 ===========  ░╚═════╝░╚═╝░░╚═╝╚══════╝░╚═════╝░░╚════╝░╚══════╝
 `);
 
-game("JAVascript", []);
+game("javascript", []);

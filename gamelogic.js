@@ -43,7 +43,6 @@ function isGameLost(word, guesses) {
   // De goede guesses moeten niet meegeteld worden!
   let wrongGuessesCounter = 0;
    for (let i = 0; i < guesses.length; i++) {
-    //
     let guessedLetter = guesses[i];
     if (!word.includes(guessedLetter)) {
       wrongGuessesCounter+= 1;
@@ -59,8 +58,10 @@ function singleLetter (letter) {
 
 }
 // Mogen geen symbolen bevatten
+
+// Nog toevoegen dat je geen hoofdletters en kleine letters door elkaar mag
 function isTheAlphabet (letter) {
-  return /[a-zA-Z]/.test(letter);
+  return /[a-z]/.test(letter);
 }
 
 module.exports = {
