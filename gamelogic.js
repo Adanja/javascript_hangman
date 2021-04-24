@@ -21,7 +21,6 @@ function displayWordSoFar(word, guesses) {
 
 
 function isGameWon(word, guesses) {
-  // WRITE ME
   // Checkt voor winconditie
   for (let i = 0; i < word.length; i++) {
     // bij elk letter controloren of hij bij de guesses zit
@@ -35,7 +34,6 @@ function isGameWon(word, guesses) {
 }
 
 function isGameLost(word, guesses) {
-  // WRITE ME
   // Checkt of je hebt verloren > meer dan 7x geraden = verloren maak gebruik van for loop
 
   // Maak een counter die bij elke loop telt hoevaak je er doorheen gaat

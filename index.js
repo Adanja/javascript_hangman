@@ -31,9 +31,9 @@ function hangman (guesses, word) {
     if (!word.includes(guessedLetter)) {
       wrongGuessesCounter+= 1;
     }
-    else {
-      return wrongGuessesCounter >= 7;
-    }
+    // else {
+    //   return wrongGuessesCounter >= 7;
+    // }
   }
 
     switch (wrongGuessesCounter) {
@@ -124,15 +124,24 @@ __________
         break;
 
       default:
-        console.log("Default");
+        console.log("");
         break;
     }
 }
-
+function displayWordLength(word) {
+  let showUnderscores = word + "_";
+  return showUnderscores;
+}
 
 function game(word, guesses) {
+  hangman(guesses, word);
+  if (guesses.length !==0) {
+    console.log("Dit heb je tot nu toe geraden: ", guesses);
+  }
+  console.log(displayWordSoFar(word, guesses));
 
-  console.log("Dit heb je tot nu toe geraden: ", guesses);
+  // Hier wil ik laten zien hoeveel streepjes het woord bevat
+  displayWordLength(word);
 
   let letter = askForLetter(guesses);
 
@@ -140,23 +149,17 @@ function game(word, guesses) {
   guesses.push(letter);
 
   // volgende ronde! we roepen game nog een keer aan
-
-  console.log(displayWordSoFar(word, guesses));
   if (isGameWon(word, guesses)) {
-    console.log("Je hebt gewonnen!");
+    console.log(displayWordSoFar(word, guesses));
+    console.log("Je hebt gewonnen! Het goede woord is: " + word + "!");
   }
   else if(isGameLost(word, guesses)) {
     hangman(guesses, word);
     console.log("Je hebt het 7 keer proberen te raden, dit is VEEL TE VAAK. VERLOREN.");
   }
   else {
-    hangman(guesses, word);
     game(word, guesses);
   }
-
-
-
-
 }
 
 console.log(`
@@ -168,5 +171,8 @@ __________
 |            ╚██████╔╝██║░░██║███████╗╚██████╔╝╚█████╔╝███████╗
 ===========  ░╚═════╝░╚═╝░░╚═╝╚══════╝░╚═════╝░░╚════╝░╚══════╝
 `);
-
-game("javascript", []);
+const word = ["spook", "koekjes", "hamster", "hoax", "gelei", "champignon", "belastingsdienst", "chronischevermoeidheidssyndroom"];
+let gekozenWoord = word[Math.round(Math.random() * 10) % word.length];
+// console.log(gekozenWoord);
+// console.log(Math.round(Math.random() * 10) % 3);
+game(gekozenWoord, []);
